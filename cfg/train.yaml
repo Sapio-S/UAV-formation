@@ -1,0 +1,37 @@
+# hydra.job.chdir: false
+
+headless: true
+
+sim: ${task.sim}
+env: ${task.env}
+
+save_traj: false
+total_frames: 100_000_000 #1000_000_000
+max_iters: -1
+eval_interval: -1
+save_interval: 1000
+save_last: true
+seed: 0
+init_ckpt_path: null
+vis_env_id: 0
+
+viewer:
+  resolution: [960, 720]
+  eye: [8, 0., 6.]
+  lookat: [0., 0., 1.]
+
+wandb:
+  group: ${oc.select:..task.name}
+  run_name: 0616_unified_2b10c
+  job_type: train
+  entity: nics_marl # new wandb team name
+  project: UnifiedFormation
+  mode: online
+  run_id: 
+  monitor_gym: True
+  tags: 
+
+defaults:
+  - task: FormationUnified
+  - algo: mappo
+  - _self_

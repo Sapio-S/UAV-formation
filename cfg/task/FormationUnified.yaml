@@ -1,0 +1,136 @@
+name: FormationUnified
+
+defaults:
+  # see https://hydra.cc/docs/advanced/overriding_packages/
+  - /base/env_base@_here_
+  - /base/sim_base@_here_
+  # - /base/randomization_base@_here_
+
+env: 
+  num_envs: 1024
+  env_spacing: 12
+  max_episode_length: 900
+
+track_pos: false
+
+random_ball_num: false
+throw_together: false
+ball_num: 2
+target_vel_type: xyz
+acceptable_v_diff: 1.0
+random_ball_speed: true
+ball_speed: 3.0
+max_ball_speed: 5.0
+min_ball_speed: 2.0
+use_separate_obs: true
+use_world_state: false
+use_abs_b_vel: false
+throw_ball_pattern: 1 # -1 for mixed, 1 for (vx, vy)<-> ball_speed; 2 for (vx, vy, vz)<->ball_speed
+throw_center_ratio: 0.
+throw_center: true
+force_sensor: false
+time_encoding: false
+throw_threshold: 150
+throw_time_range: 450
+formation_size: 1
+formation_type: l # valid for h, l
+normalize_formation: True # only be used in cost_l
+reward_type: 1 # 1 for total reward, 2 for ball reward + drone reward + done reward
+mix_curriculum: false
+relative_self_pos: false
+swarm_rl: true
+zigzag: true
+
+static_margin: 2.0
+grid_border: 2
+static_obs_num: 10
+static_height: 5.0
+use_top_k_obs: false
+use_attn_mask: true
+use_mask_behind: false
+use_mask_front: false
+mask_all: false
+mask_range: true
+mask_ball: true
+rescale_formation: true
+
+obs_range: 10
+top_k: 5
+static_obs_type: 2 
+static_obs_pos: grid # [grid, random]
+grid_size: 0.5
+grid_size_max: 2.0
+grid_size_min: 0.8
+eval: false
+# 1 for static_obs_num * 10 cubes that form static_obs_num columns
+# 2 for static_obs_num whole columns
+# 3 for static_obs_num * 10 cubes
+
+permute_drone_obs: false
+permute_ball_obs: false
+
+# for crazyflie
+drone_model: crazyflie
+hard_safe_distance: 0.15 # distance of two drone, 0.34, only cal arm in Humming 
+safe_distance: 0.4 # soft version of hard_safe_distance
+ball_hit_distance: 0.15 # hit, 0.17+0.15=0.32
+col_hit_distance: 0.15
+obs_safe_distance: 0.4 # hard penalty
+soft_obs_safe_distance: 0.6 # soft penalty
+
+# formation
+formation_coeff: 5
+formation_size_coeff: 5 # size reward coeff, used in cost_l
+separation_coeff: 1
+too_close_penalty: -10.
+
+# obstacle
+ball_reward_coeff: 10.
+ball_hard_reward_coeff: 100.
+static_coeff: 0.5
+static_soft_coeff: 0.0
+static_hard_coeff: 1.0
+use_cube_reward_mask: false
+hit_penalty: -20.
+
+# flight
+velocity_coeff: 10.
+heading_coeff: 1.0
+height_coeff: 5.0
+position_reward_coeff: 50
+terminated_reward: 50.
+truncated_reward: 10.
+crash_penalty: -10.
+no_enough_speed_penalty: -10.0
+not_straight_penalty: 10
+survival_coeff: 1
+
+# temporarily removed
+has_ball_coeff: 0.2
+no_ball_coeff: 1.0
+after_throw_coeff: 0.2 # additional to no ball case
+
+# action
+reward_effort_weight: 0.5
+reward_action_smoothness_weight: 1
+spin_reward_coeff: 1
+reward_throttle_smoothness_weight: 2
+
+formation: triangle #dense_square # hexagon # tetragon
+
+flatten_obs: false
+flatten_state: false
+
+action_transform: PIDrate
+
+# reward weight vector
+morl_smooth_coeff: 0.5123452752249692
+morl_formation_coeff: 0.14240923087088264
+morl_obstacle_coeff: 0.2187620445033934
+morl_forward_coeff: 0.1264834494007547
+
+rescale_reward: false
+# for wandb sweep
+ratio1: 0.5
+ratio2: 0.5
+ratio3: 0.5

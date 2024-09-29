@@ -1,0 +1,29 @@
+headless: true
+
+sim: ${task.sim}
+env: ${task.env}
+
+total_frames: -1
+total_episodes: ${eval:2 * ${env.num_envs}}
+seed: 0
+
+viewer:
+  resolution: [960, 720]
+  eye: [8, 0, 6]
+  lookat: [0., 0., 1.]
+
+wandb:
+  group: ${oc.select:..task.name}-eval
+  run_name: ${oc.select:..task.ball_speed,none}-${oc.select:..task.target_vel,none}
+  job_type: train
+  entity: nics_marl
+  project: rapid_dodge
+  mode: online # set to 'disabled' when debugging locally
+  run_id: 
+  monitor_gym: True
+  tags: 
+
+defaults:
+  - task: FormationMultiBallForward
+  - algo: mappo
+  - _self_
